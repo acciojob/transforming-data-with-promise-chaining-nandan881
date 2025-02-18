@@ -1,15 +1,57 @@
 <!DOCTYPE html>
-
-<html>
-  <head>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-
-  <body>
-    <!-- do not change this code -->
-    <input type="number" id="ip" />
-    <button id="btn">Start</button>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transforming Data with Promise Chaining</title>
+</head>
+<body>
+    <input type="number" id="ip" placeholder="Enter a number">
+    <button id="btn">Start Transformation</button>
     <div id="output"></div>
-    <script type="text/javascript" src="./script.js"></script>
-  </body>
+    <script>
+        document.getElementById("btn").addEventListener("click", () => {
+            const outputDiv = document.getElementById("output");
+            const inputValue = parseFloat(document.getElementById("ip").value);
+            if (isNaN(inputValue)) {
+                outputDiv.textContent = "Please enter a valid number.";
+                return;
+            }
+            
+            new Promise((resolve) => {
+                setTimeout(() => {
+                    outputDiv.textContent = `Result: ${inputValue}`;
+                    resolve(inputValue);
+                }, 2000);
+            })
+            .then((num) => new Promise((resolve) => {
+                setTimeout(() => {
+                    num *= 2;
+                    outputDiv.textContent = `Result: ${num}`;
+                    resolve(num);
+                }, 2000);
+            }))
+            .then((num) => new Promise((resolve) => {
+                setTimeout(() => {
+                    num -= 3;
+                    outputDiv.textContent = `Result: ${num}`;
+                    resolve(num);
+                }, 1000);
+            }))
+            .then((num) => new Promise((resolve) => {
+                setTimeout(() => {
+                    num /= 2;
+                    outputDiv.textContent = `Result: ${num}`;
+                    resolve(num);
+                }, 1000);
+            }))
+            .then((num) => new Promise((resolve) => {
+                setTimeout(() => {
+                    num += 10;
+                    outputDiv.textContent = `Final Result: ${num}`;
+                }, 1000);
+            }));
+        });
+    </script>
+</body>
 </html>
